@@ -9,6 +9,7 @@ class CountriesList extends React.Component {
           {this.props.countries.map((country) => {
             return (
               <Link to={'/' + country.cca3} key={country.name.official}>
+                {country.flag}
                 {country.name.common}
               </Link>
             );

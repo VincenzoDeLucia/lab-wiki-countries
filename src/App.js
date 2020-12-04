@@ -8,26 +8,41 @@ import CountryDetails from '../src/components/CountryDetails';
 import countries from './countries.json';
 
 class App extends React.Component {
+  state = {
+    countries: undefined,
+  };
+
+  componentDidMount() {
+    this.setState({
+      countries: countries,
+    });
+  }
+
   render() {
-    return (
-      <div className="App">
-        <Navbar />
+    if (!this.state.countries) {
+      return <h1>Loading...</h1>;
+    } else {
+      return (
+        <div className="App">
+          <Navbar />
 
-        <CountriesList countries={countries} />
+          <CountriesList countries={this.state.countries} />
 
-        <Switch>
-          {/* <Route exact path="/:cca3" /> */}
-
-          <Route
-            exact
-            path="/:cca3"
-            render={(routeProps) => (
-              <CountryDetails {...routeProps} countries={countries} />
-            )}
-          />
-        </Switch>
-      </div>
-    );
+          <Switch>
+            <Route
+              exact
+              path="/:cca3"
+              render={(routeProps) => (
+                <CountryDetails
+                  {...routeProps}
+                  countries={this.state.countries}
+                />
+              )}
+            />
+          </Switch>
+        </div>
+      );
+    }
   }
 }
 
